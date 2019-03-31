@@ -91,13 +91,14 @@ const sites = [
 	}
 ];
 
-for (let i = 0; i < sites.length; i++) {
+const breakpoints = [`desktop`, `tablet`, `tablet-portrait`, `mobile`];
+
+sites.map(site => {
 	try {
-		doScreenCapture(sites[i][`url`], sites[i][`name`], `desktop`);
-		doScreenCapture(sites[i][`url`], sites[i][`name`], `tablet`);
-		doScreenCapture(sites[i][`url`], sites[i][`name`], `tablet-portrait`);
-		doScreenCapture(sites[i][`url`], sites[i][`name`], `mobile`);
+		breakpoints.map(device => {
+			doScreenCapture(site.url, site.name, device);
+		});
 	} catch (e) {
-		console.error(`Error in capturing site for ${sites[i][`name`]}`, e);
+		console.error(`Error in capturing site for ${site.name}`, e);
 	}
-}
+});
