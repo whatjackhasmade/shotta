@@ -1,15 +1,48 @@
 const puppeteer = require(`puppeteer`);
+const fs = require(`fs`);
+const moment = require(`moment`);
+const dateStamp = moment().format(`DD-MM-YYYY`);
 
-async function doScreenCapture(url, site_name) {
+if (!fs.existsSync(dateStamp)) {
+	fs.mkdirSync(dateStamp);
+}
+
+async function doScreenCapture(url, site_name, device) {
 	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
-	await page.setViewport({
+
+	let deviceViewport = {
 		height: 1080,
 		width: 1920
-	});
+	};
+
+	if (device === `tablet`) {
+		deviceViewport = {
+			height: 768,
+			width: 1024
+		};
+	}
+
+	if (device === `tablet-portrait`) {
+		deviceViewport = {
+			height: 1024,
+			width: 768
+		};
+	}
+
+	if (device === `mobile`) {
+		deviceViewport = {
+			height: 550,
+			width: 320
+		};
+	}
+
+	await page.setViewport(deviceViewport);
+
 	await page.goto(url, { waitUntil: `networkidle0` });
-	const bodyHandle = await page.$("body");
+	const bodyHandle = await page.$(`body`);
 	const { width, height } = await bodyHandle.boundingBox();
+
 	const screenshot = await page.screenshot({
 		clip: {
 			x: 0,
@@ -17,56 +50,53 @@ async function doScreenCapture(url, site_name) {
 			width,
 			height
 		},
-		path: `${site_name}.png`
+		path: `${dateStamp}/${device}-${site_name}.png`
 	});
+
 	await browser.close();
 }
 
-const today = new Date();
-const dd = String(today.getDate()).padStart(2, "0"),
-	mm = String(today.getMonth() + 1).padStart(2, "0"),
-	yyyy = today.getFullYear();
-
-const dateStamp = `${dd}-${mm}-${yyyy}-`;
-
 const sites = [
 	{
-		name: `${dateStamp}whatjackhasmade-homepage`,
+		name: `whatjackhasmade-homepage`,
 		url: `https://whatjackhasmade.co.uk`
 	},
 	{
-		name: `${dateStamp}whatjackhasmade-posts`,
+		name: `whatjackhasmade-posts`,
 		url: `https://whatjackhasmade.co.uk/posts`
 	},
 	{
-		name: `${dateStamp}whatjackhasmade-about`,
+		name: `whatjackhasmade-about`,
 		url: `https://whatjackhasmade.co.uk/about`
 	},
 	{
-		name: `${dateStamp}leomik-homepage`,
+		name: `leomik-homepage`,
 		url: `https://www.leomik.com/`
 	},
 	{
-		name: `${dateStamp}leomik-digital-adverts`,
+		name: `leomik-digital-adverts`,
 		url: `https://www.leomik.com/digital-adverts`
 	},
 	{
-		name: `${dateStamp}leomik-social-media`,
+		name: `leomik-social-media`,
 		url: `https://www.leomik.com/social-media`
 	},
 	{
-		name: `${dateStamp}leomik-about`,
+		name: `leomik-about`,
 		url: `https://www.leomik.com/about`
 	},
 	{
-		name: `${dateStamp}leomik-contact`,
+		name: `leomik-contact`,
 		url: `https://www.leomik.com/contact`
 	}
 ];
 
 for (let i = 0; i < sites.length; i++) {
 	try {
-		doScreenCapture(sites[i][`url`], sites[i][`name`]);
+		doScreenCapture(sites[i][`url`], sites[i][`name`], `desktop`);
+		doScreenCapture(sites[i][`url`], sites[i][`name`], `tablet`);
+		doScreenCapture(sites[i][`url`], sites[i][`name`], `tablet-portrait`);
+		doScreenCapture(sites[i][`url`], sites[i][`name`], `mobile`);
 	} catch (e) {
 		console.error(`Error in capturing site for ${sites[i][`name`]}`, e);
 	}
