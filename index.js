@@ -88,6 +88,30 @@ const sites = [
 	{
 		name: `leomik-contact`,
 		url: `https://www.leomik.com/contact`
+	},
+	{
+		name: `theringstudio-homepage`,
+		url: `http://www.theringstudio.com/`
+	},
+	{
+		name: `theringstudio-about`,
+		url: `http://www.theringstudio.com/da/119437`
+	},
+	{
+		name: `theringstudio-engagement`,
+		url: `http://www.theringstudio.com/da/119438`
+	},
+	{
+		name: `theringstudio-wedding`,
+		url: `http://www.theringstudio.com/da/119440`
+	},
+	{
+		name: `theringstudio-contact`,
+		url: `http://www.theringstudio.com/contact`
+	},
+	{
+		name: `theringstudio-gallery`,
+		url: `http://www.theringstudio.com/dg/26602`
 	}
 ];
 
