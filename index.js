@@ -90,6 +90,38 @@ const sites = [
 		url: `https://www.leomik.com/contact`
 	},
 	{
+		name: `makeupandmane-landing`,
+		url: `https://www.makeupandmane.co.uk/`
+	},
+	{
+		name: `makeupandmane-homepage`,
+		url: `https://www.makeupandmane.co.uk/home`
+	},
+	{
+		name: `makeupandmane-about`,
+		url: `https://www.makeupandmane.co.uk/makeupandmane`
+	},
+	{
+		name: `makeupandmane-bridal`,
+		url: `https://www.makeupandmane.co.uk/bridal`
+	},
+	{
+		name: `makeupandmane-portfolio`,
+		url: `https://www.makeupandmane.co.uk/behind-the-scenes`
+	},
+	{
+		name: `makeupandmane-prices`,
+		url: `https://www.makeupandmane.co.uk/prices-services`
+	},
+	{
+		name: `makeupandmane-reviews`,
+		url: `https://www.makeupandmane.co.uk/reviews`
+	},
+	{
+		name: `makeupandmane-contact`,
+		url: `https://www.makeupandmane.co.uk/contact`
+	},
+	{
 		name: `theringstudio-homepage`,
 		url: `http://www.theringstudio.com/`
 	},
