@@ -1,0 +1,24 @@
+{
+	"breakpoints": [
+		{
+			"size": "desktop",
+			"width": 1920,
+			"height": 1080
+		},
+		{
+			"size": "tablet",
+			"width": 1024,
+			"height": 768
+		},
+		{
+			"size": "tablet-portrait",
+			"width": 768,
+			"height": 1024
+		},
+		{
+			"size": "mobile",
+			"width": 320,
+			"height": 550
+		}
+	]
+}

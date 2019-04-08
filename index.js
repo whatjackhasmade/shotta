@@ -2,157 +2,51 @@ const puppeteer = require(`puppeteer`);
 const fs = require(`fs`);
 const moment = require(`moment`);
 const dateStamp = moment().format(`DD-MM-YYYY`);
+const { sites } = require(`./sites.json`);
+const { breakpoints } = require(`./breakpoints.json`);
 
 if (!fs.existsSync(dateStamp)) {
 	fs.mkdirSync(dateStamp);
 }
 
 async function doScreenCapture(url, site_name, device) {
-	const browser = await puppeteer.launch();
-	const page = await browser.newPage();
+	try {
+		const browser = await puppeteer.launch();
+		const page = await browser.newPage();
 
-	let deviceViewport = {
-		height: 1080,
-		width: 1920
-	};
-
-	if (device === `tablet`) {
-		deviceViewport = {
-			height: 768,
-			width: 1024
+		const deviceViewport = {
+			height: device.height,
+			width: device.width
 		};
+
+		await page.setViewport(deviceViewport);
+		await page.goto(url, { waitUntil: `networkidle0` });
+
+		const bodyHandle = await page.$(`body`);
+		const { width, height } = deviceViewport;
+
+		const screenshot = await page.screenshot({
+			clip: {
+				x: 0,
+				y: 0,
+				width,
+				height
+			},
+			path: `${dateStamp}/${device.size}-${site_name}.png`
+		});
+
+		await browser.close();
+	} catch (e) {
+		console.error(`Error in capturing site for ${site_name}`, e);
 	}
-
-	if (device === `tablet-portrait`) {
-		deviceViewport = {
-			height: 1024,
-			width: 768
-		};
-	}
-
-	if (device === `mobile`) {
-		deviceViewport = {
-			height: 550,
-			width: 320
-		};
-	}
-
-	await page.setViewport(deviceViewport);
-
-	await page.goto(url, { waitUntil: `networkidle0` });
-	const bodyHandle = await page.$(`body`);
-	const { width, height } = await bodyHandle.boundingBox();
-
-	const screenshot = await page.screenshot({
-		clip: {
-			x: 0,
-			y: 0,
-			width,
-			height
-		},
-		path: `${dateStamp}/${device}-${site_name}.png`
-	});
-
-	await browser.close();
 }
-
-const sites = [
-	{
-		name: `whatjackhasmade-homepage`,
-		url: `https://whatjackhasmade.co.uk`
-	},
-	{
-		name: `whatjackhasmade-posts`,
-		url: `https://whatjackhasmade.co.uk/posts`
-	},
-	{
-		name: `whatjackhasmade-about`,
-		url: `https://whatjackhasmade.co.uk/about`
-	},
-	{
-		name: `leomik-homepage`,
-		url: `https://www.leomik.com/`
-	},
-	{
-		name: `leomik-digital-adverts`,
-		url: `https://www.leomik.com/digital-adverts`
-	},
-	{
-		name: `leomik-social-media`,
-		url: `https://www.leomik.com/social-media`
-	},
-	{
-		name: `leomik-about`,
-		url: `https://www.leomik.com/about`
-	},
-	{
-		name: `leomik-contact`,
-		url: `https://www.leomik.com/contact`
-	},
-	{
-		name: `makeupandmane-landing`,
-		url: `https://www.makeupandmane.co.uk/`
-	},
-	{
-		name: `makeupandmane-homepage`,
-		url: `https://www.makeupandmane.co.uk/home`
-	},
-	{
-		name: `makeupandmane-about`,
-		url: `https://www.makeupandmane.co.uk/makeupandmane`
-	},
-	{
-		name: `makeupandmane-bridal`,
-		url: `https://www.makeupandmane.co.uk/bridal`
-	},
-	{
-		name: `makeupandmane-portfolio`,
-		url: `https://www.makeupandmane.co.uk/behind-the-scenes`
-	},
-	{
-		name: `makeupandmane-prices`,
-		url: `https://www.makeupandmane.co.uk/prices-services`
-	},
-	{
-		name: `makeupandmane-reviews`,
-		url: `https://www.makeupandmane.co.uk/reviews`
-	},
-	{
-		name: `makeupandmane-contact`,
-		url: `https://www.makeupandmane.co.uk/contact`
-	},
-	{
-		name: `theringstudio-homepage`,
-		url: `http://www.theringstudio.com/`
-	},
-	{
-		name: `theringstudio-about`,
-		url: `http://www.theringstudio.com/da/119437`
-	},
-	{
-		name: `theringstudio-engagement`,
-		url: `http://www.theringstudio.com/da/119438`
-	},
-	{
-		name: `theringstudio-wedding`,
-		url: `http://www.theringstudio.com/da/119440`
-	},
-	{
-		name: `theringstudio-contact`,
-		url: `http://www.theringstudio.com/contact`
-	},
-	{
-		name: `theringstudio-gallery`,
-		url: `http://www.theringstudio.com/dg/26602`
-	}
-];
-
-const breakpoints = [`desktop`, `tablet`, `tablet-portrait`, `mobile`];
 
 sites.map(site => {
 	try {
 		breakpoints.map(device => {
-			doScreenCapture(site.url, site.name, device);
+			setTimeout(() => {
+				doScreenCapture(site.url, site.name, device);
+			}, 10000);
 		});
 	} catch (e) {
 		console.error(`Error in capturing site for ${site.name}`, e);
