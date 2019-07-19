@@ -3,6 +3,26 @@
 		{
 			"name": "boldsaver-homepage",
 			"url": "https://boldsaver.com/"
+		},
+		{
+			"name": "boldsaver-codes",
+			"url": "https://boldsaver.com/codes"
+		},
+		{
+			"name": "boldsaver-events",
+			"url": "https://boldsaver.com/events"
+		},
+		{
+			"name": "boldsaver-getaways",
+			"url": "https://boldsaver.com/getaways"
+		},
+		{
+			"name": "boldsaver-ideas",
+			"url": "https://boldsaver.com/ideas"
+		},
+		{
+			"name": "boldsaver-music",
+			"url": "https://boldsaver.com/music"
 		}
 	]
 }
