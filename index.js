@@ -1,7 +1,7 @@
 const puppeteer = require(`puppeteer`);
 const fs = require(`fs`);
 const moment = require(`moment`);
-const dateStamp = moment().format(`DD-MM-YYYY`);
+const dateStamp = moment().format(`YYYY-MM-DD`);
 const { sites } = require(`./sites.json`);
 const { breakpoints } = require(`./breakpoints.json`);
 
@@ -39,8 +39,8 @@ async function doScreenCapture(url, site_name, device) {
 
 sites.map(site => {
 	try {
-		breakpoints.map(device => {
-			doScreenCapture(site.url, site.name, device);
+		breakpoints.map(async device => {
+			await doScreenCapture(site.url, site.name, device);
 		});
 	} catch (e) {
 		console.error(`Error in capturing site for ${site.name}`, e);
