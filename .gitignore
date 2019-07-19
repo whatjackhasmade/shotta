@@ -115,6 +115,5 @@ $RECYCLE.BIN/
 
 .lock
 yarn.lock
-*.png
 
 # End of https://www.gitignore.io/api/node,windows
