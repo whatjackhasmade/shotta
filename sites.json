@@ -1,28 +1,8 @@
 {
 	"sites": [
 		{
-			"name": "leomik-homepage",
-			"url": "https://leomik.com/"
-		},
-		{
-			"name": "leomik-services",
-			"url": "https://leomik.com/services"
-		},
-		{
-			"name": "leomik-work",
-			"url": "https://leomik.com/work"
-		},
-		{
-			"name": "leomik-studio",
-			"url": "https://leomik.com/studio"
-		},
-		{
-			"name": "leomik-reel",
-			"url": "https://leomik.com/reel"
-		},
-		{
-			"name": "leomik-contact",
-			"url": "https://leomik.com/contact"
+			"name": "boldsaver-homepage",
+			"url": "https://boldsaver.com/"
 		}
 	]
 }
